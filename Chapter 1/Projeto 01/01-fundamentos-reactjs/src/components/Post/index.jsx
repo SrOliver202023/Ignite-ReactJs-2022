@@ -2,16 +2,19 @@ import styles from './style.module.css';
 
 import { Comment } from '../Comment';
 
+import { Avatar } from '../Avatar';
+
 
 export function Post() {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img
-            className={styles.avatar}
+          <Avatar
+            hasBorder
             src='https://github.com/sroliver202023.png'
           />
+
 
           <div className={styles.authorInfo}>
             <strong>Emmerson Oliveira</strong>
