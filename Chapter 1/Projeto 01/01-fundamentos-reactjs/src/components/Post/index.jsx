@@ -39,6 +39,10 @@ export function Post({ author, publishedAt, content }) {
     setNewCommentText(text.target.value);
   }
 
+  function deleteComment(comment) {
+    console.log(`Delete the comment : ${comment}`);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -101,6 +105,7 @@ export function Post({ author, publishedAt, content }) {
             <Comment
               key={`#C ${comment} - ${new Date()} - @${Math.random()}`}
               content={comment}
+              onDeleteComment={deleteComment}
             />
           ))
         }
