@@ -14,7 +14,10 @@ export function Comment({ content, onDeleteComment }) {
   }
 
   function handleLikeCount() {
-    setLikeCount(likeCount + 1);
+    // setLikeCount(likeCount + 1);
+    setLikeCount((before) => {
+      return (before + 1);
+    });
 
   }
 
