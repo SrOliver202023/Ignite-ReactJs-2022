@@ -11,7 +11,10 @@ import { useState } from 'react';
 
 export function Post({ author, publishedAt, content }) {
 
-  const [comments, setComments] = useState([1, 2]);
+  const [newCommentText, setNewCommentText] = useState('');
+  const [comments, setComments] = useState([
+    'Que post muito bacana hein! 👏👏'
+  ]);
 
   const publishedAtDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
     locale: ptBR,
@@ -25,7 +28,15 @@ export function Post({ author, publishedAt, content }) {
 
   function handleCreateNewComment(event) {
     event.preventDefault();
-    setComments([...comments, comments.length + 1]);
+
+    if (newCommentText !== '') {
+      setComments([...comments, newCommentText]);
+      setNewCommentText('');
+    }
+  }
+
+  function handleNewCommentChange(text) {
+    setNewCommentText(text.target.value);
   }
 
   return (
@@ -54,9 +65,9 @@ export function Post({ author, publishedAt, content }) {
 
         {content.map((line) => {
           if (line.type === "paragraph") {
-            return <p>{line.content}</p>;
+            return <p key={`#L ${line.content} - ${new Date()} - @${Math.random()}`}>{line.content}</p>;
           } else if (line.type = "link") {
-            return <p><a href='#'>{line.content}</a></p>;
+            return <p key={`#L ${line.content} - ${new Date()} - @${Math.random()}`}><a href='#'>{line.content}</a></p>;
           }
 
         })}
@@ -74,6 +85,8 @@ export function Post({ author, publishedAt, content }) {
         <strong>Deixe seu feedback</strong>
 
         <textarea
+          value={newCommentText}
+          onChange={handleNewCommentChange}
           placeholder='Deixe um comentário'
         />
 
@@ -84,7 +97,12 @@ export function Post({ author, publishedAt, content }) {
       </form>
       <div className={styles.commentList}>
         {
-          comments.map(() => (<Comment />))
+          comments.map((comment) => (
+            <Comment
+              key={`#C ${comment} - ${new Date()} - @${Math.random()}`}
+              content={comment}
+            />
+          ))
         }
 
       </div>
